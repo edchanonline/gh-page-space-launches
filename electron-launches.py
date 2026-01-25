@@ -71,12 +71,32 @@ def _(df_aggregated, period_control):
     chart = create_cumulative_launches_chart(df_aggregated, period=period_control.value)
     chart_log = create_cumulative_launches_chart_log(df_aggregated, period=period_control.value)
 
-    mo.hstack(
-        [chart, chart_log],
-        widths=[1, 1],
-        wrap=True,
-        gap=1.5,
+    # Toggle button: False = vstack (mobile-friendly), True = hstack
+    layout_toggle = mo.ui.switch(
+        value=False,  # Default to vstack for mobile
+        label="Horizontal Layout",
     )
+    layout_toggle
+    return chart, chart_log, layout_toggle
+
+
+@app.cell
+def _(chart, chart_log, layout_toggle):
+    # Conditionally render hstack or vstack based on toggle
+    if layout_toggle.value:
+        layout = mo.hstack(
+            [chart, chart_log],
+            widths=[1, 1],
+            wrap=True,
+            gap=1.5,
+        )
+    else:
+        layout = mo.vstack(
+            [chart, chart_log],
+            gap=1.5,
+        )
+    
+    layout
     return
 
 
