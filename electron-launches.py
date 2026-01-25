@@ -224,6 +224,12 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
         # Use the path that works in the deployed environment
         browser_filepath = "../data/raw/Electron.tsv"
         
+        # Add cache-busting query parameter to force fresh loads
+        # This prevents browsers from serving stale cached data
+        import time
+        cache_buster = f"?v={int(time.time())}"
+        browser_filepath_with_cache = f"{browser_filepath}{cache_buster}"
+        
         # Fetch file content - pandas in Pyodide doesn't support URLs directly
         # so we need to fetch and use StringIO
         from io import StringIO
@@ -233,7 +239,7 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
         try:
             # Try Pyodide's http module (available in browser/WASM)
             import pyodide.http
-            response = pyodide.http.open_url(browser_filepath)
+            response = pyodide.http.open_url(browser_filepath_with_cache)
             # Pyodide's open_url returns a file-like object
             content = response.read()
             if isinstance(content, bytes):
@@ -245,18 +251,18 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             # Fallback to urllib
             try:
                 import urllib.request
-                with urllib.request.urlopen(browser_filepath) as response:
+                with urllib.request.urlopen(browser_filepath_with_cache) as response:
                     content = response.read().decode('utf-8')
             except Exception as e2:
                 raise FileNotFoundError(
-                    f"Could not load data file from {filepath} or {browser_filepath}. "
+                    f"Could not load data file from {filepath} or {browser_filepath_with_cache}. "
                     f"Pyodide error: {fetch_error}, "
                     f"urllib error: {e2}"
                 )
         
         if not content or len(content.strip()) == 0:
             raise FileNotFoundError(
-                f"Data file appears to be empty. Path: {browser_filepath}"
+                f"Data file appears to be empty. Path: {browser_filepath_with_cache}"
             )
         
         # Parse header from first line (which starts with #)
@@ -277,7 +283,7 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             preview = content[:500] if content else "(empty content)"
             raise ValueError(
                 f"Could not find header line in data file. "
-                f"Path: {browser_filepath}, "
+                f"Path: {browser_filepath_with_cache}, "
                 f"Content preview (first 500 chars): {preview}, "
                 f"Number of lines: {len(lines)}"
             )
