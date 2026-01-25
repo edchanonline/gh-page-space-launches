@@ -149,7 +149,12 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
     # Try local file access first (for development)
     try:
         with open(filepath, "r") as file:
-            headers = file.readline().lstrip("#").strip().split("\t")
+            # Read first line to get headers
+            first_line = file.readline()
+            header_line = first_line.lstrip("#").strip()
+            headers = [h.strip() for h in header_line.split("\t")]
+            # Filter out empty headers (in case of trailing tabs)
+            headers = [h for h in headers if h]
 
         df = pd.read_csv(
             filepath,
@@ -159,6 +164,14 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             comment="#",  # Pandas handles this natively
             skipinitialspace=True,
         )
+        
+        # Verify that we got the expected columns
+        if 'Launch_Date' not in df.columns:
+            raise ValueError(
+                f"Expected 'Launch_Date' column not found. "
+                f"Available columns: {list(df.columns)}"
+            )
+        
         return df
     except (FileNotFoundError, OSError):
         # If local file access fails, try HTTP (for browser/WASM deployment)
@@ -174,43 +187,51 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             # Fallback: use relative URL (works when HTML and data are in same structure)
             url = filepath
         
-        # Fetch file content - try Pyodide's http first, then fallback to urllib
-        from io import StringIO
-        
-        content = None
+        # Read header first (since it starts with #, pandas will skip it)
+        # We need the header to provide column names to pandas
         try:
-            # Try Pyodide's http module (available in browser/WASM)
             import pyodide.http
             response = pyodide.http.open_url(url)
-            content = response.read()
-            if isinstance(content, bytes):
-                content = content.decode('utf-8')
+            first_line_bytes = response.readline()
+            if isinstance(first_line_bytes, bytes):
+                first_line = first_line_bytes.decode('utf-8')
+            else:
+                first_line = first_line_bytes
         except:
-            # Fallback to urllib (may work in some environments)
+            # Fallback to urllib
             try:
                 import urllib.request
                 with urllib.request.urlopen(url) as response:
-                    content = response.read().decode('utf-8')
+                    first_line = response.readline().decode('utf-8')
             except Exception as e:
                 raise FileNotFoundError(
                     f"Could not load data file from {filepath} or {url}. "
                     f"Error: {e}"
                 )
         
-        # Parse header from first line
-        lines = content.split('\n')
-        header_line = lines[0].lstrip("#").strip()
-        headers = header_line.split("\t")
+        # Parse header line
+        header_line = first_line.lstrip("#").strip()
+        headers = [h.strip() for h in header_line.split("\t")]
+        # Filter out empty headers (in case of trailing tabs)
+        headers = [h for h in headers if h]
         
-        # Read CSV from string
+        # Pandas can read directly from URL - much simpler!
         df = pd.read_csv(
-            StringIO(content),
+            url,
             dtype=str,
             names=headers,
             sep="\t",
             comment="#",
             skipinitialspace=True,
         )
+        
+        # Verify that we got the expected columns
+        if 'Launch_Date' not in df.columns:
+            raise ValueError(
+                f"Expected 'Launch_Date' column not found. "
+                f"Available columns: {list(df.columns)}"
+            )
+        
         return df
 
 
