@@ -6,8 +6,7 @@ on:
       - main
     paths:
       - 'electron-launches.py'
-      - 'src/**'
-      - 'data/**'
+      - 'docs/**'
       - '.github/workflows/deploy-gh-pages.yml'
   workflow_dispatch:  # Allow manual triggering
 
@@ -38,11 +37,6 @@ jobs:
         run: |
           mkdir -p docs
           marimo export html-wasm electron-launches.py -o docs --mode edit
-      
-      - name: Copy data files
-        run: |
-          mkdir -p docs/data/raw
-          cp data/raw/Electron.tsv docs/data/raw/Electron.tsv
       
       - name: Ensure CNAME exists
         run: |

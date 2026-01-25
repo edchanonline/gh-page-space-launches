@@ -7,7 +7,24 @@ with app.setup(hide_code=True):
     import marimo as mo
     import pandas as pd
     import warnings
-
+    import sys
+    import os
+    
+    # Add current directory to Python path for WASM imports
+    # In browser/WASM, modules are in the same directory as the HTML
+    try:
+        # Try to detect if we're in Pyodide/WASM
+        if hasattr(sys, 'platform') and ('emscripten' in sys.platform.lower() or 'wasi' in sys.platform.lower()):
+            # We're in Pyodide/WASM - add current directory to path
+            # The HTML file and modules will be in the same directory
+            sys.path.insert(0, '.')
+    except:
+        # If detection fails, try adding anyway (harmless if already there)
+        try:
+            sys.path.insert(0, '.')
+        except:
+            pass
+    
     # Suppress expected pandas warnings about timezone info being dropped when converting to Period
     # This is expected behavior - Period objects don't support timezones
     warnings.filterwarnings("ignore", ".*will drop timezone information.*", UserWarning)
