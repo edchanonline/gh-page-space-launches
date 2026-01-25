@@ -1,0 +1,190 @@
+import marimo
+
+__generated_with = "0.19.6"
+app = marimo.App(width="full")
+
+with app.setup(hide_code=True):
+    import marimo as mo
+    import pandas as pd
+    import warnings
+
+    # Suppress expected pandas warnings about timezone info being dropped when converting to Period
+    # This is expected behavior - Period objects don't support timezones
+    warnings.filterwarnings("ignore", ".*will drop timezone information.*", UserWarning)
+
+
+@app.cell
+def _():
+    df_electron = load_electron_data()
+    df_electron["Launch_Date_ET"] = parse_vague_dates_to_eastern(
+        df_electron["Launch_Date"], tz="America/New_York", output_type="datetime"
+    )
+    return (df_electron,)
+
+
+@app.cell
+def _(df_electron):
+    # Interactive controls for filtering
+    period_control = mo.ui.dropdown(
+        options=["month", "quarter", "year"],
+        value="quarter",
+        label="Period",
+    )
+
+    # Get date range from data
+    # For end_date, use the date of the max datetime to ensure we include the last launch
+    # (the date picker will default to end of day when converted)
+    min_date = df_electron["Launch_Date_ET"].min().date()
+    max_date = df_electron["Launch_Date_ET"].max().date()
+
+    start_date_control = mo.ui.date(
+        value=min_date,
+        label="Start Date",
+    )
+
+    end_date_control = mo.ui.date(
+        value=max_date,
+        label="End Date",
+    )
+
+    mo.hstack([period_control, start_date_control, end_date_control])
+    return end_date_control, period_control, start_date_control
+
+
+@app.cell
+def _(df_electron, end_date_control, period_control, start_date_control):
+    # Use the interactive controls to filter and aggregate
+    df_aggregated = cumulative_launches_by_period(
+        df_electron,
+        period=period_control.value,
+        start_date=start_date_control.value,
+        end_date=end_date_control.value,
+    )
+    return (df_aggregated,)
+
+
+@app.cell
+def _(df_aggregated, period_control):
+    import launch_charts
+
+    chart = launch_charts.create_cumulative_launches_chart(df_aggregated, period=period_control.value)
+    chart_log = launch_charts.create_cumulative_launches_chart_log(df_aggregated, period=period_control.value)
+
+    mo.hstack(
+        [chart, chart_log],
+        widths=[1, 1],
+        wrap=True,
+        gap=1.5,
+    )
+    return
+
+
+@app.cell
+def _(df_aggregated):
+    df_aggregated.sort_values("date", ascending=False).set_index("period_label")
+    return
+
+
+@app.cell
+def _(df_electron):
+    df_electron[["Flight_ID", "Flight", "Launch_Date_ET"]].sort_values("Launch_Date_ET", ascending=False).set_index("Flight_ID")
+    return
+
+
+@app.cell
+def _():
+    mo.md("""
+    **Data Citation:**
+
+    McDowell, Jonathan C., 2020. General Catalog of Artificial Space Objects,
+    Release 1.8.0, https://planet4589.org/space/gcat
+    """)
+    return
+
+
+@app.cell
+def _():
+    # GoFundMe widget embed - using iframe
+    mo.Html("""
+    <div style="margin-top: 50px;">
+    <iframe 
+        src="https://www.gofundme.com/f/fund-jonathans-space-report-library-transition/widget/medium" 
+        width="100%" 
+        height="315" 
+        style="border: none; max-width: 100%;">
+    </iframe>
+    </div>
+    """)
+    return
+
+
+@app.function
+def parse_vague_dates_to_eastern(
+    date_series, tz="America/New_York", output_type="date"
+):
+    """Parse Vague Date format strings and convert to specified timezone.
+
+    Wrapper around the parser module for use in marimo notebooks.
+
+    Args:
+        date_series: pandas Series of Vague Date format strings
+        tz: Timezone to convert to (default: 'America/New_York')
+        output_type: 'datetime' or 'date' (default: 'date')
+    """
+    import vague_date_parser
+
+    return vague_date_parser.parse_vague_dates_to_eastern(date_series, tz, output_type)
+
+
+@app.function
+def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
+    """Load Electron launch data from TSV file.
+
+    Args:
+        filepath: Path to the Electron.tsv file
+
+    Returns:
+        DataFrame with Electron launch data
+    """
+    # Read header from first line
+    with open(filepath, "r") as file:
+        headers = file.readline().lstrip("#").strip().split("\t")
+
+    df = pd.read_csv(
+        filepath,
+        dtype=str,
+        names=headers,
+        sep="\t",
+        comment="#",  # Pandas handles this natively
+        skipinitialspace=True,
+    )
+
+    return df
+
+
+@app.function
+def cumulative_launches_by_period(
+    df, period: str = "quarter", start_date=None, end_date=None
+):
+    """Aggregate launches by time period with cumulative counts.
+
+    Wrapper around launch_aggregation module for use in marimo notebooks.
+
+    Args:
+        df: DataFrame with 'Launch_Date_ET' column (datetime)
+        period: Time period to aggregate by ('month', 'quarter', or 'year')
+        start_date: Optional start date to filter (inclusive). Can be string or datetime.
+        end_date: Optional end date to filter (inclusive). Can be string or datetime.
+
+    Returns:
+        DataFrame with 'date', 'period_label', and 'launch_count' columns (cumulative total)
+    """
+    import launch_aggregation
+
+    return launch_aggregation.cumulative_launches_by_period(
+        df, period=period, start_date=start_date, end_date=end_date
+    )
+
+
+if __name__ == "__main__":
+    app.run()
