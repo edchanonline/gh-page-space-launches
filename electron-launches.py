@@ -187,37 +187,50 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             # Fallback: use relative URL (works when HTML and data are in same structure)
             url = filepath
         
-        # Read header first (since it starts with #, pandas will skip it)
-        # We need the header to provide column names to pandas
+        # Fetch file content - pandas in Pyodide doesn't support URLs directly
+        # so we need to fetch and use StringIO
+        from io import StringIO
+        
+        content = None
         try:
+            # Try Pyodide's http module (available in browser/WASM)
             import pyodide.http
             response = pyodide.http.open_url(url)
-            first_line_bytes = response.readline()
-            if isinstance(first_line_bytes, bytes):
-                first_line = first_line_bytes.decode('utf-8')
-            else:
-                first_line = first_line_bytes
+            content = response.read()
+            if isinstance(content, bytes):
+                content = content.decode('utf-8')
         except:
             # Fallback to urllib
             try:
                 import urllib.request
                 with urllib.request.urlopen(url) as response:
-                    first_line = response.readline().decode('utf-8')
+                    content = response.read().decode('utf-8')
             except Exception as e:
                 raise FileNotFoundError(
                     f"Could not load data file from {filepath} or {url}. "
                     f"Error: {e}"
                 )
         
-        # Parse header line
-        header_line = first_line.lstrip("#").strip()
+        # Parse header from first line (which starts with #)
+        lines = content.split('\n')
+        # Find the first line that looks like a header
+        header_line = None
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith('#') and '\t' in stripped:
+                header_line = stripped.lstrip("#").strip()
+                break
+        
+        if not header_line:
+            raise ValueError("Could not find header line in data file")
+        
         headers = [h.strip() for h in header_line.split("\t")]
         # Filter out empty headers (in case of trailing tabs)
         headers = [h for h in headers if h]
         
-        # Pandas can read directly from URL - much simpler!
+        # Read CSV from StringIO (pandas in Pyodide needs file-like object, not URL)
         df = pd.read_csv(
-            url,
+            StringIO(content),
             dtype=str,
             names=headers,
             sep="\t",
