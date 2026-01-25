@@ -37,7 +37,7 @@ jobs:
       - name: Export marimo app
         run: |
           mkdir -p docs
-          marimo export html-wasm electron-launches.py -o docs --mode run
+          marimo export html-wasm electron-launches.py -o docs --mode edit
       
       - name: Copy data files
         run: |

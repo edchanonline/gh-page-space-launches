@@ -192,27 +192,41 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
         from io import StringIO
         
         content = None
+        fetch_error = None
         try:
             # Try Pyodide's http module (available in browser/WASM)
             import pyodide.http
             response = pyodide.http.open_url(url)
+            # Pyodide's open_url returns a file-like object
             content = response.read()
             if isinstance(content, bytes):
                 content = content.decode('utf-8')
-        except:
+            elif hasattr(content, 'decode'):
+                content = content.decode('utf-8')
+        except Exception as e:
+            fetch_error = e
             # Fallback to urllib
             try:
                 import urllib.request
                 with urllib.request.urlopen(url) as response:
                     content = response.read().decode('utf-8')
-            except Exception as e:
+            except Exception as e2:
                 raise FileNotFoundError(
                     f"Could not load data file from {filepath} or {url}. "
-                    f"Error: {e}"
+                    f"Pyodide error: {fetch_error}, "
+                    f"urllib error: {e2}"
                 )
         
+        if not content or len(content.strip()) == 0:
+            raise FileNotFoundError(
+                f"Data file appears to be empty. URL: {url}"
+            )
+        
         # Parse header from first line (which starts with #)
+        # Normalize line endings
+        content = content.replace('\r\n', '\n').replace('\r', '\n')
         lines = content.split('\n')
+        
         # Find the first line that looks like a header
         header_line = None
         for line in lines:
@@ -222,7 +236,14 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
                 break
         
         if not header_line:
-            raise ValueError("Could not find header line in data file")
+            # Provide more helpful error message
+            preview = content[:500] if content else "(empty content)"
+            raise ValueError(
+                f"Could not find header line in data file. "
+                f"URL: {url}, "
+                f"Content preview (first 500 chars): {preview}, "
+                f"Number of lines: {len(lines)}"
+            )
         
         headers = [h.strip() for h in header_line.split("\t")]
         # Filter out empty headers (in case of trailing tabs)
