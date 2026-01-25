@@ -175,17 +175,8 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
         return df
     except (FileNotFoundError, OSError):
         # If local file access fails, try HTTP (for browser/WASM deployment)
-        # Construct URL relative to current page location
-        try:
-            import js
-            # Get the directory of the current page
-            base_path = js.window.location.pathname.rsplit('/', 1)[0]
-            if base_path and not base_path.endswith('/'):
-                base_path += '/'
-            url = js.window.location.origin + base_path + filepath
-        except:
-            # Fallback: use relative URL (works when HTML and data are in same structure)
-            url = filepath
+        # Use the path that works in the deployed environment
+        browser_filepath = "../data/raw/Electron.tsv"
         
         # Fetch file content - pandas in Pyodide doesn't support URLs directly
         # so we need to fetch and use StringIO
@@ -196,7 +187,7 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
         try:
             # Try Pyodide's http module (available in browser/WASM)
             import pyodide.http
-            response = pyodide.http.open_url(url)
+            response = pyodide.http.open_url(browser_filepath)
             # Pyodide's open_url returns a file-like object
             content = response.read()
             if isinstance(content, bytes):
@@ -208,18 +199,18 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             # Fallback to urllib
             try:
                 import urllib.request
-                with urllib.request.urlopen(url) as response:
+                with urllib.request.urlopen(browser_filepath) as response:
                     content = response.read().decode('utf-8')
             except Exception as e2:
                 raise FileNotFoundError(
-                    f"Could not load data file from {filepath} or {url}. "
+                    f"Could not load data file from {filepath} or {browser_filepath}. "
                     f"Pyodide error: {fetch_error}, "
                     f"urllib error: {e2}"
                 )
         
         if not content or len(content.strip()) == 0:
             raise FileNotFoundError(
-                f"Data file appears to be empty. URL: {url}"
+                f"Data file appears to be empty. Path: {browser_filepath}"
             )
         
         # Parse header from first line (which starts with #)
@@ -240,7 +231,7 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
             preview = content[:500] if content else "(empty content)"
             raise ValueError(
                 f"Could not find header line in data file. "
-                f"URL: {url}, "
+                f"Path: {browser_filepath}, "
                 f"Content preview (first 500 chars): {preview}, "
                 f"Number of lines: {len(lines)}"
             )
