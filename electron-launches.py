@@ -10,18 +10,26 @@ with app.setup(hide_code=True):
     import sys
     import os
     
-    # Add current directory to Python path for WASM imports
-    # In browser/WASM, modules are in the same directory as the HTML
+    # Add parent directory to Python path for WASM imports
+    # In browser/WASM, the HTML file is in a subdirectory (e.g., docs/electron-launches/)
+    # and the modules are one level up (in docs/), so we need to add '..' to the path
     try:
         # Try to detect if we're in Pyodide/WASM
         if hasattr(sys, 'platform') and ('emscripten' in sys.platform.lower() or 'wasi' in sys.platform.lower()):
-            # We're in Pyodide/WASM - add current directory to path
-            # The HTML file and modules will be in the same directory
-            sys.path.insert(0, '.')
+            # We're in Pyodide/WASM - add parent directory to path
+            # The HTML file is in a subdirectory, modules are one level up
+            if '..' not in sys.path:
+                sys.path.insert(0, '..')
+            # Also add current directory as fallback
+            if '.' not in sys.path:
+                sys.path.insert(0, '.')
     except:
         # If detection fails, try adding anyway (harmless if already there)
         try:
-            sys.path.insert(0, '.')
+            if '..' not in sys.path:
+                sys.path.insert(0, '..')
+            if '.' not in sys.path:
+                sys.path.insert(0, '.')
         except:
             pass
     
