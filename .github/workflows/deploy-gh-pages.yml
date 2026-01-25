@@ -35,7 +35,7 @@ jobs:
       - name: Export marimo app
         run: |
           mkdir -p docs
-          marimo export html-wasm electron-launches.py -o docs --mode edit
+          marimo export html-wasm electron-launches.py -o docs --mode run
       
       - name: Ensure CNAME exists
         run: |
