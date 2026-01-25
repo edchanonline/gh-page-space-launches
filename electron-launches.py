@@ -141,25 +141,77 @@ def load_electron_data(filepath: str = "data/raw/Electron.tsv"):
     """Load Electron launch data from TSV file.
 
     Args:
-        filepath: Path to the Electron.tsv file
+        filepath: Path to the Electron.tsv file (local or URL)
 
     Returns:
         DataFrame with Electron launch data
     """
-    # Read header from first line
-    with open(filepath, "r") as file:
-        headers = file.readline().lstrip("#").strip().split("\t")
+    # Try local file access first (for development)
+    try:
+        with open(filepath, "r") as file:
+            headers = file.readline().lstrip("#").strip().split("\t")
 
-    df = pd.read_csv(
-        filepath,
-        dtype=str,
-        names=headers,
-        sep="\t",
-        comment="#",  # Pandas handles this natively
-        skipinitialspace=True,
-    )
-
-    return df
+        df = pd.read_csv(
+            filepath,
+            dtype=str,
+            names=headers,
+            sep="\t",
+            comment="#",  # Pandas handles this natively
+            skipinitialspace=True,
+        )
+        return df
+    except (FileNotFoundError, OSError):
+        # If local file access fails, try HTTP (for browser/WASM deployment)
+        # Construct URL relative to current page location
+        try:
+            import js
+            # Get the directory of the current page
+            base_path = js.window.location.pathname.rsplit('/', 1)[0]
+            if base_path and not base_path.endswith('/'):
+                base_path += '/'
+            url = js.window.location.origin + base_path + filepath
+        except:
+            # Fallback: use relative URL (works when HTML and data are in same structure)
+            url = filepath
+        
+        # Fetch file content - try Pyodide's http first, then fallback to urllib
+        from io import StringIO
+        
+        content = None
+        try:
+            # Try Pyodide's http module (available in browser/WASM)
+            import pyodide.http
+            response = pyodide.http.open_url(url)
+            content = response.read()
+            if isinstance(content, bytes):
+                content = content.decode('utf-8')
+        except:
+            # Fallback to urllib (may work in some environments)
+            try:
+                import urllib.request
+                with urllib.request.urlopen(url) as response:
+                    content = response.read().decode('utf-8')
+            except Exception as e:
+                raise FileNotFoundError(
+                    f"Could not load data file from {filepath} or {url}. "
+                    f"Error: {e}"
+                )
+        
+        # Parse header from first line
+        lines = content.split('\n')
+        header_line = lines[0].lstrip("#").strip()
+        headers = header_line.split("\t")
+        
+        # Read CSV from string
+        df = pd.read_csv(
+            StringIO(content),
+            dtype=str,
+            names=headers,
+            sep="\t",
+            comment="#",
+            skipinitialspace=True,
+        )
+        return df
 
 
 @app.function

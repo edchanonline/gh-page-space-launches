@@ -50,6 +50,10 @@ jobs:
             echo "electron-launches.talknewspace.com" > docs/CNAME
           fi
       
+      - name: Create .nojekyll file
+        run: |
+          touch docs/.nojekyll
+      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
