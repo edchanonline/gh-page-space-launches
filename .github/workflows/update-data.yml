@@ -21,12 +21,12 @@ jobs:
       
       - name: Download Electron.tsv
         run: |
-          curl -o data/raw/Electron.tsv https://www.planet4589.org/space/gcat/tsv/launch/Electron.tsv
+          curl -o docs/data/raw/Electron.tsv https://www.planet4589.org/space/gcat/tsv/launch/Electron.tsv
       
       - name: Check for changes
         id: check-changes
         run: |
-          if [ -n "$(git status --porcelain data/raw/Electron.tsv)" ]; then
+          if [ -n "$(git status --porcelain docs/data/raw/Electron.tsv)" ]; then
             echo "has_changes=true" >> $GITHUB_OUTPUT
             echo "✓ Data file has been updated"
           else
@@ -39,7 +39,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/raw/Electron.tsv
+          git add docs/data/raw/Electron.tsv
           git commit -m "chore: update Electron launch data from planet4589.org"
           git push
       
