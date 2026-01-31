@@ -2,8 +2,8 @@ name: Update Electron Launch Data
 
 on:
   schedule:
-    # Run every 5 minutes for testing (change back to '0 6 * * *' for daily at 6:00 AM UTC)
-    - cron: '*/5 * * * *'
+    # 4x daily at off-peak minutes (00:07, 06:07, 12:07, 18:07 UTC) to avoid top-of-hour load
+    - cron: '7 0,6,12,18 * * *'
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
