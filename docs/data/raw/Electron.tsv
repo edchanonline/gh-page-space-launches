@@ -1,5 +1,5 @@
 #Launch_Tag	Launch_JD	Launch_Date	LV_Type	Variant	Flight_ID	Flight	Mission	FlightCode	Platform	Launch_Site	Launch_Pad	Ascent_Site	Ascent_Pad	Apogee	Apoflag	Range	RangeFlag	Dest	OrbPay	Agency	LaunchCode	FailCode	Group	Category	LTCite	Cite	Notes
-# Updated 2026 Feb  2 1714:15
+# Updated 2026 Feb  3 0454:07
 2017-F02  	2457898.68 	2017 May 25 0420:00	Electron	-	1	It's A Test	-	-	-	MAHIA	LC1A	-	-	    224	 	    -	 	-	   0.020 	RLABN	OF	AD	C	Sat LEO OO	twitter.com	-	Erroneous RSO
 2018-010 	2458139.57 	2018 Jan 21 0143	Electron	-	2	Still Testing	Electron 02 Rideshare	Dove/Lemurs	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.022 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
 2018-088 	2458433.66 	2018 Nov 11 0350	Electron	-	3	It's Business Time	Electron 03 Rideshare	CICERO 10/Lemurs	-	MAHIA	LC1A	-	-	    520	 	    -	 	-	   0.125 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
