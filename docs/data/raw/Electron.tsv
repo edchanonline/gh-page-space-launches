@@ -1,5 +1,5 @@
 #Launch_Tag	Launch_JD	Launch_Date	LV_Type	Variant	Flight_ID	Flight	Mission	FlightCode	Platform	Launch_Site	Launch_Pad	Ascent_Site	Ascent_Pad	Apogee	Apoflag	Range	RangeFlag	Dest	OrbPay	Agency	LaunchCode	FailCode	Group	Category	LTCite	Cite	Notes
-# Updated 2026 Apr 23 0000:40
+# Updated 2026 Apr 23 2252:41
 2017-F02  	2457898.68 	2017 May 25 0420:00	Electron	-	1	It's A Test	-	-	-	MAHIA	LC1A	-	-	    224	 	    -	 	-	   0.020 	RLABN	OF	AD	C	Sat LEO OO	twitter.com	-	Erroneous RSO
 2018-010 	2458139.57 	2018 Jan 21 0143	Electron	-	2	Still Testing	Electron 02 Rideshare	Dove/Lemurs	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.022 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
 2018-088 	2458433.66 	2018 Nov 11 0350	Electron	-	3	It's Business Time	Electron 03 Rideshare	CICERO 10/Lemurs	-	MAHIA	LC1A	-	-	    520	 	    -	 	-	   0.125 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
@@ -86,3 +86,4 @@
 2026-056 	2461120.26 	2026 Mar 20 1810	Electron	-	84	Eight Days A Week	Strix-6	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2026-065 	2461127.88 	2026 Mar 28 0914	Electron	-	85	Daughter of the Stars	Celeste	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.138 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2026-S232  	2461152.57 	2026 Apr 22 0136	HASTE	-	86	BUBBLES	MACH-TB?	-	-	MARS	Pad 0C	-	-	    300	?	  800	?	60W 34N?	   0.000 	RLABU	SS	-	-	Hypersonic	nasaspaceflight.com	-	-
+2026-088 	2461153.63 	2026 Apr 23 0309	Electron	-	87	Kakushin Rising	JAXA ISTD-4	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
