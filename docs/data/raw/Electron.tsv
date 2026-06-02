@@ -1,5 +1,5 @@
 #Launch_Tag	Launch_JD	Launch_Date	LV_Type	Variant	Flight_ID	Flight	Mission	FlightCode	Platform	Launch_Site	Launch_Pad	Ascent_Site	Ascent_Pad	Apogee	Apoflag	Range	RangeFlag	Dest	OrbPay	Agency	LaunchCode	FailCode	Group	Category	LTCite	Cite	Notes
-# Updated 2026 May 25 0306:49
+# Updated 2026 Jun  2 0009:07
 2017-F02  	2457898.68 	2017 May 25 0420:00	Electron	-	1	It's A Test	-	-	-	MAHIA	LC1A	-	-	    224	 	    -	 	-	   0.020 	RLABN	OF	AD	C	Sat LEO OO	twitter.com	-	Erroneous RSO
 2018-010 	2458139.57 	2018 Jan 21 0143	Electron	-	2	Still Testing	Electron 02 Rideshare	Dove/Lemurs	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.022 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
 2018-088 	2458433.66 	2018 Nov 11 0350	Electron	-	3	It's Business Time	Electron 03 Rideshare	CICERO 10/Lemurs	-	MAHIA	LC1A	-	-	    520	 	    -	 	-	   0.125 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
@@ -58,7 +58,7 @@
 2024-219 	2460639.66 	2024 Nov 25 0355:18	Electron	-	56	Ice AIS Baby	Kineis 5A-5E	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
 2024-S85  	2460658.54 	2024 Dec 14 0100	HASTE	-	57	STONEHENGE	MACH-TB-3	-	-	MARS	Pad 0C	-	-	    300	?	 4800	?	22W 34N?	   0.000 	RLABU	SS	-	-	Hypersonic	youtube.com	-	-
 2024-248 	2460666.10 	2024 Dec 21 1417	Electron	-	58	Owl the Way Up	Strix-2	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
-2025-028 	2460715.36 	2025 Feb  8 2043	Electron	-	59	IoT 4 U and Me	Kineis 2A-2E	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
+2025-028 	2460715.36 	2025 Feb  8 2043	Electron	-	59	IoT 4 U and Me	Kineis 2A-2E	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
 2025-033 	2460725.47 	2025 Feb 18 2317	Electron	-	60	Fasten Your Space Belts	BlackSky Gen3	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.138 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2025-050 	2460749.50 	2025 Mar 15 0000	Electron	-	61	The Lightning God Reigns	QPS-SAR-9	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.120 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2025-056 	2460752.56 	2025 Mar 18 0131	Electron	-	62	High Five	Kineis 4A-4E	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
