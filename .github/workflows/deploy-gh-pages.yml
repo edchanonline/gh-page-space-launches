@@ -38,29 +38,7 @@ jobs:
           marimo export html-wasm electron-launches.py -o docs --mode run
 
       - name: Patch locale bug in exported HTML
-        run: |
-          # Inject a script to sanitize navigator.language before marimo's react-aria
-          # loads it. Browsers on some Linux systems return "en-US@posix" which is an
-          # invalid BCP 47 tag and causes `new Intl.Locale()` to throw a RangeError,
-          # crashing the entire marimo app. Strip the POSIX @-extension if present.
-          PATCH='<script>\n  (function() {\n    var lang = navigator.language || "";\n    if (lang && lang.indexOf("@") !== -1) {\n      var sanitized = lang.split("@")[0];\n      try { new Intl.Locale(sanitized); }\n      catch(e) { sanitized = "en-US"; }\n      Object.defineProperty(navigator, "language", { get: function() { return sanitized; } });\n    }\n  })();\n</script>'
-          python3 -c "
-import re, sys
-with open('docs/index.html', 'r') as f:
-    html = f.read()
-# Insert before the first <script type=\"module\"> which loads marimo
-patched = html.replace(
-    '<script type=\"module\" crossorigin src=',
-    '<script>\n  (function() {\n    var lang = navigator.language || \"\";\n    if (lang && lang.indexOf(\"@\") !== -1) {\n      var sanitized = lang.split(\"@\")[0];\n      try { new Intl.Locale(sanitized); } catch(e) { sanitized = \"en-US\"; }\n      Object.defineProperty(navigator, \"language\", { get: function() { return sanitized; } });\n    }\n  })();\n</script>\n    <script type=\"module\" crossorigin src=',
-    1  # only replace first occurrence
-)
-if patched == html:
-    print('WARNING: injection point not found in index.html', file=sys.stderr)
-    sys.exit(1)
-with open('docs/index.html', 'w') as f:
-    f.write(patched)
-print('Locale patch injected successfully')
-"
+        run: python3 scripts/patch_locale.py docs/index.html
 
       - name: Ensure CNAME exists
         run: |
