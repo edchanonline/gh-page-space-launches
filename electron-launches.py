@@ -7,10 +7,20 @@ with app.setup(hide_code=True):
     import marimo as mo
     import pandas as pd
     import warnings
-    from zoneinfo import ZoneInfo
     from typing import Literal
     import altair as alt
-    
+
+    # Load tzdata in Pyodide/WASM environments (not bundled by default).
+    # zoneinfo requires this package to resolve named timezones like America/New_York.
+    try:
+        import pyodide  # type: ignore
+        import micropip  # type: ignore
+        await micropip.install("tzdata")
+    except ImportError:
+        pass  # Not running in Pyodide — tzdata is available from the OS
+
+    from zoneinfo import ZoneInfo
+
     # Suppress expected pandas warnings about timezone info being dropped when converting to Period
     # This is expected behavior - Period objects don't support timezones
     warnings.filterwarnings("ignore", ".*will drop timezone information.*", UserWarning)
