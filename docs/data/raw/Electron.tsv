@@ -1,5 +1,5 @@
 #Launch_Tag	Launch_JD	Launch_Date	LV_Type	Variant	Flight_ID	Flight	Mission	FlightCode	Platform	Launch_Site	Launch_Pad	Ascent_Site	Ascent_Pad	Apogee	Apoflag	Range	RangeFlag	Dest	OrbPay	Agency	LaunchCode	FailCode	Group	Category	LTCite	Cite	Notes
-# Updated 2026 Jul 12 1109:57
+# Updated 2026 Jul 12 2308:07
 2017-F02  	2457898.68 	2017 May 25 0420:00	Electron	-	1	It's A Test	-	-	-	MAHIA	LC1A	-	-	    224	 	    -	 	-	   0.020 	RLABN	OF	AD	C	Sat LEO OO	twitter.com	-	Erroneous RSO
 2018-010 	2458139.57 	2018 Jan 21 0143	Electron	-	2	Still Testing	Electron 02 Rideshare	Dove/Lemurs	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.022 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
 2018-088 	2458433.66 	2018 Nov 11 0350	Electron	-	3	It's Business Time	Electron 03 Rideshare	CICERO 10/Lemurs	-	MAHIA	LC1A	-	-	    520	 	    -	 	-	   0.125 	RLABN	OS	-	C	Sat LEO OO	twitter.com	-	-
@@ -25,7 +25,7 @@
 2021-120 	2459557.50 	2021 Dec  9 0002:07	Electron	-	23	Data With Destiny	Global-16/Global-17	-	-	MAHIA	LC1A	-	-	    444	 	    -	 	-	   0.130 	RLABN	OS	-	C	Sat LEO OP 1	Wire	-	-
 2022-020 	2459639.36 	2022 Feb 28 2037:25	Electron	-	24	The Owl'sNight Continues	Strix Beta	-	-	MAHIA	LC1B	-	-	    613	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat SSO OL	Wire	-	-
 2022-034 	2459672.03 	2022 Apr  2 1241:38	Electron	-	25	Without Mission a Beat	Global-18/Global-20	-	-	MAHIA	LC1A	-	-	    459	 	    -	 	-	   0.130 	RLABN	OS	-	C	Sat LEO OP 1	Wire	-	-
-2022-047 	2459702.45 	2022 May  2 2249:52	Electron	-	26	There and Back Again	E-Space Demo	-	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.064 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
+2022-047 	2459702.45 	2022 May  2 2249:52	Electron	-	26	There and Back Again	E-Space Demo	-	-	MAHIA	LC1A	-	-	    536	 	    -	 	-	   0.064 	RLABN	OS	-	C M	Sat SSO OO	Wire	-	-
 2022-070 	2459758.91 	2022 Jun 28 0955	Electron	L	27	CAPSTONE	CAPSTONE	-	-	MAHIA	LC1B	-	-	 150000	 	    -	 	-	   0.325 	RLABN	DS	-	C/G	Sat DSO OO	Wire	-	-
 2022-079 	2459773.77 	2022 Jul 13 0630	Electron	-	28	Wise One Looks Ahead	NROL-162	-	-	MAHIA	LC1A	-	-	    595	 	    -	 	-	   0.100 	RLABN	OS	-	C/G	Sat LEO OO	Wire	-	-
 2022-091 	2459795.71 	2022 Aug  4 0500	Electron	-	29	Antipodean Adventure	NROL-199	-	-	MAHIA	LC1B	-	-	    643	 	    -	 	-	   0.100 	RLABN	OS	-	C/G	Sat LEO OO	Wire	-	-
@@ -53,7 +53,7 @@
 2024-137 	2460525.19 	2024 Aug  2 1639	Electron	-	51	Owl for One, One for Owl	Strix-4	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2024-142 	2460534.05 	2024 Aug 11 1318	Electron	-	52	A Sky full of SARs	Capella 13 Acadia-3	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.180 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
 2024-172 	2460574.46 	2024 Sep 20 2301	Electron	-	53	Kineis Killed the RadIOT	Kineis 3A-3E	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
-2024-201 	2460619.95 	2024 Nov  5 1054	Electron	-	54	Changes in Latitudes,..	E-Space 4	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
+2024-201 	2460619.95 	2024 Nov  5 1054	Electron	-	54	Changes in Latitudes,..	E-Space 4	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C M	Sat SSO OO	Wire	-	-
 2024-S76  	2460638.75 	2024 Nov 24 0600	HASTE	-	55	HIPPO	MACH-TB-2	-	-	MARS	Pad 0C	-	-	    300	?	 4800	?	22W 34N?	   0.000 	RLABU	SS	-	-	Hypersonic	youtube.com	-	-
 2024-219 	2460639.66 	2024 Nov 25 0355:18	Electron	-	56	Ice AIS Baby	Kineis 5A-5E	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.140 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
 2024-S85  	2460658.54 	2024 Dec 14 0100	HASTE	-	57	STONEHENGE	MACH-TB-3	-	-	MARS	Pad 0C	-	-	    300	?	 4800	?	22W 34N?	   0.000 	RLABU	SS	-	-	Hypersonic	youtube.com	-	-
@@ -69,7 +69,7 @@
 2025-138 	2460853.23 	2025 Jun 26 1728	Electron	-	67	Get the Hawk Outta Here	Hawk 12/Kestrel 0A	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.105 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
 2025-140 	2460854.80 	2025 Jun 28 0708	Electron	-	68	Symphony in the Stars	Lyra 4	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.120 	RLABN	OS	-	C	Sat SSO OO	Wire	-	-
 2025-169 	2460892.67 	2025 Aug  5 0410	Electron	-	69	The Harvest Goddess..	QPS-SAR-12	-	-	MAHIA	LC1B	-	-	      -	 	    -	 	-	   0.120 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
-2025-185 	2460911.45 	2025 Aug 23 2242	Electron	-	70	Live, Laugh, Launch	E-Space	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.120 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
+2025-185 	2460911.45 	2025 Aug 23 2242	Electron	-	70	Live, Laugh, Launch	E-Space	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.120 	RLABN	OS	-	C M	Sat LEO OO	Wire	-	-
 2025-S45  	2460941.50 	2025 Sep 23 0000	HASTE	-	71	JENNA	MACH-TB-4?	-	-	MARS	Pad 0C	-	-	    300	?	 2000	?	55W 30N?	   0.000 	RLABU	SS	-	-	Hypersonic	nasaspaceflight.com	-	-
 2025-S51  	2460949.52 	2025 Oct  1 0028	HASTE	-	72	JUSTIN	MACH-TB-5?	-	-	MARS	Pad 0C	-	-	    300	?	 2000	?	-	   0.000 	RLABU	SS	-	-	Hypersonic	nasaspaceflight.com	-	-
 2025-229 	2460963.19 	2025 Oct 14 1633	Electron	-	73	Owl New World	Strix-5	-	-	MAHIA	LC1A	-	-	      -	 	    -	 	-	   0.150 	RLABN	OS	-	C	Sat LEO OO	Wire	-	-
