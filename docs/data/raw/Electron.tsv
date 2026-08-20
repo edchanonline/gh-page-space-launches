@@ -1,5 +1,5 @@
 #Launch_Tag	Launch_JD	Launch_Date	LV_Type	Variant	Flight_ID	Flight	Mission	FlightCode	Platform	Launch_Site	Launch_Pad	Ascent_Site	Ascent_Pad	Perigee	Apogee	Apoflag	Inc	Azimuth	Range	RangeFlag	Dest	OrbMass	OrbPay	Agency	LaunchCode	FailCode	Group	Category	LTCite	Cite	Notes
-# Updated 2026 Aug 18 2326:44
+# Updated 2026 Aug 20 1623:29
 2017-F02  	2457898.68 	2017 May 25 0420:00	Electron	-	1	It's A Test	-	-	-	MAHIA	LC1A	-	-	  -4000	    224	 	  0.0 	   -	    -	 	-	   0.000 	   0.020 	RLABN	OF  	AD	C	Sat LEO OO	twitter.com	-	Erroneous RSO
 2018-010 	2458139.57 	2018 Jan 21 0143	Electron	-	2	Still Testing	Electron 02 Rideshare	Dove/Lemurs	-	MAHIA	LC1A	-	-	    290	    525	 	  0.0 	   -	    -	 	-	   0.000 	   0.022 	RLABN	OS  	-	C	Sat LEO OO	twitter.com	-	-
 2018-088 	2458433.66 	2018 Nov 11 0350	Electron	-	3	It's Business Time	Electron 03 Rideshare	CICERO 10/Lemurs	-	MAHIA	LC1A	-	-	    208	    502	 	  0.0 	   -	    -	 	-	   0.000 	   0.125 	RLABN	OS  	-	C	Sat LEO OO	twitter.com	-	-
@@ -92,3 +92,4 @@
 2026-142 	2461210.93 	2026 Jun 19 1019	Electron	2	90	VICTUS HAZE Puma	VICTUS HAZE Puma	-	-	MAHIA	LC1A	-	-	    169	    395	 	  0.0 	   -	    -	 	-	   0.000 	   0.150 	RLABN	OS  	-	C	Sat SSO O	Wire	-	-
 2026-146 	2461218.24 	2026 Jun 26 1743	Electron	-	91	10 Owl of 10	StriX-8	-	-	MAHIA	LC1B	-	-	    238	    528	 	  0.0 	   -	    -	 	-	   0.000 	   0.150 	RLABN	OS  	-	C	Sat LEO OO	Wire	-	-
 2026-180 	2461258.89 	2026 Aug  6 0918	Electron	-	92	The Grain Goddess Prov.	QPS-SAR-13	-	-	MAHIA	LC1A	-	-	    235	    569	 	  0.0 	   -	    -	 	-	   0.000 	   0.120 	RLABN	OS  	-	C	Sat LEO OO	Wire	-	-
+2026-191 	2461273.04 	2026 Aug 20 1304:45	Electron	-	93	The Lighting God Defends	QPS-SAR-18	-	-	MAHIA	LC1B	-	-	      0	      0	 	  0.0 	   -	    -	 	-	   0.000 	   0.120 	RLABN	OS  	-	C	Sat LEO OO	Wire	-	-
